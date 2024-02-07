@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <InvariantGlobalization>false</InvariantGlobalization>
+    <UserSecretsId>3892beb4-72fe-4667-af47-e3ecc164c5f7</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AspirePoc.Domain\AspirePoc.Core.csproj" />
+    <ProjectReference Include="..\AspirePoc.Infrastructure.RabbitMQ\AspirePoc.Infrastructure.RabbitMQ.csproj" />
+    <ProjectReference Include="..\AspirePoc.Infrastructure.SqlServer\AspirePoc.Infrastructure.SqlServer.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,6 @@
+@AspirePoc.UI.Api_HostAddress = http://localhost:5249
+
+GET {{AspirePoc.UI.Api_HostAddress}}/books/
+Accept: application/json
+
+###
