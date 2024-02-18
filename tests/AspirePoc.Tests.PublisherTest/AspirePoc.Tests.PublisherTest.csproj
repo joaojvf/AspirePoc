@@ -9,10 +9,11 @@
 
   <ItemGroup>
     <PackageReference Include="EasyNetQ" Version="7.8.0" />
+    <PackageReference Include="EasyNetQ.Serialization.NewtonsoftJson" Version="7.8.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\AspirePoc.Infrastructure.RabbitMQ\AspirePoc.Infrastructure.RabbitMQ.csproj" />
+    <ProjectReference Include="..\..\src\AspirePoc.Domain\AspirePoc.Core.csproj" />
   </ItemGroup>
 
 </Project>
