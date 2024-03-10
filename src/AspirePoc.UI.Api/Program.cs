@@ -2,6 +2,8 @@ using AspirePoc.Infrastructure.SqlServer;
 using AspirePoc.Core;
 using AspirePoc.Infrastructure.RabbitMQ;
 using Microsoft.EntityFrameworkCore;
+using AspirePoc.Core.Abstractions.Repositories;
+using AspirePoc.Infrastructure.SqlServer.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.SqlDataProjectSetup(builder.Configuration);
+SetupInfrastructure();
 builder.Services.CoreProjectSetup();
 builder.Services.RabbitMQSetup(builder.Configuration);
 
@@ -33,3 +35,11 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
+
+
+void SetupInfrastructure()
+{
+    builder.AddSqlServerDbContext<ApplicationContext>("libraryDb");
+    builder.Services.AddScoped<IBookRepository, BookRepository>();
+    builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+}
