@@ -1,4 +1,3 @@
-using AspirePoc.Infrastructure.SqlServer;
 using AspirePoc.Core;
 using AspirePoc.Infrastructure.RabbitMQ;
 using Microsoft.EntityFrameworkCore;
@@ -35,7 +34,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
-
 
 void SetupInfrastructure()
 {
