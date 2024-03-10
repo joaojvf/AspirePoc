@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AspirePoc.Aspire.ServiceDefaults\AspirePoc.Aspire.ServiceDefaults.csproj" />
     <ProjectReference Include="..\AspirePoc.Domain\AspirePoc.Core.csproj" />
     <ProjectReference Include="..\AspirePoc.Infrastructure.RabbitMQ\AspirePoc.Infrastructure.RabbitMQ.csproj" />
     <ProjectReference Include="..\AspirePoc.Infrastructure.SqlServer\AspirePoc.Infrastructure.SqlServer.csproj" />

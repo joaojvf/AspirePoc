@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.AddServiceDefaults();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -15,6 +17,8 @@ builder.Services.RabbitMQSetup(builder.Configuration);
 
 
 var app = builder.Build();
+
+app.MapDefaultEndpoints();
 if (app.Environment.IsDevelopment())
 {
     using var serviceScope = app.Services.CreateScope();
