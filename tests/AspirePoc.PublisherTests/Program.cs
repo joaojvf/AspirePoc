@@ -8,7 +8,7 @@ using (var bus = RabbitHutch.CreateBus("amqp://guest:guest@localhost:5672/"))
     Console.WriteLine("Enter a CategoryName. 'Quit' to quit.");
     while ((input = Console.ReadLine()) != "Quit")
     {
-        bus.PubSub.Publish<Category>(new() { Id = id++, Name = input! });
+        await bus.PubSub.PublishAsync<Category>(new() { Id = id++, Name = input! });
 
         Console.WriteLine("Message published!");
     }
