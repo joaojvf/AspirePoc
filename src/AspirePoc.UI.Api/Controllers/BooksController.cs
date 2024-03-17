@@ -1,5 +1,6 @@
 ﻿using AspirePoc.Core.UseCases.Books.AddBook;
 using AspirePoc.Core.UseCases.Books.GetBookById;
+using AspirePoc.Core.UseCases.Books.UpdateBook;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +22,14 @@ namespace AspirePoc.UI.Api.Controllers
         [Route("")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AddBookResponse))]
         public async Task<IActionResult> AddNewBook(AddBookRequest request)
+        {
+            return Ok(await _mediator.Send(request));
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UpdateBookResponse))]
+        public async Task<IActionResult> UpdateBook([FromRoute] int id, [FromBody] UpdateBookRequest request)
         {
             return Ok(await _mediator.Send(request));
         }

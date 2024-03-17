@@ -21,5 +21,8 @@ namespace AspirePoc.Infrastructure.SqlServer.Repositories
         public async Task<bool> HaveABookWithSameNameAndAuthorAsync(string tittle, string authorName) => await _context.Books.AnyAsync(
                 x => x.Tittle.ToUpper() == tittle.ToUpper()
                 && x.AuthorName.ToUpper() == authorName.ToUpper());
+
+        public async Task SaveChangesAsync() => await _context.SaveChangesAsync();
+
     }
 }

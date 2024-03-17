@@ -5,7 +5,9 @@ using MediatR;
 
 namespace AspirePoc.Core.UseCases.Books.AddBook
 {
-    public class GetBookByIdHandler(IBookRepository _bookRepository, ICategoryRepository _categoryRepository) : IRequestHandler<AddBookRequest, AddBookResponse>
+    public class AddBookHandler(
+        IBookRepository _bookRepository,
+        ICategoryRepository _categoryRepository) : IRequestHandler<AddBookRequest, AddBookResponse>
     {
         public async Task<AddBookResponse> Handle(AddBookRequest request, CancellationToken cancellationToken)
         {
@@ -14,7 +16,9 @@ namespace AspirePoc.Core.UseCases.Books.AddBook
                 throw new BookAlreadyAddedException(request.Tittle, request.AuthorName);
             }
 
-            var category = await _categoryRepository.GetCategoryAsync(request.CategoryId) ?? throw new CategoryNotFoundException(request.CategoryId);
+            var category = await _categoryRepository
+                .GetCategoryAsync(request.CategoryId) ??
+                throw new CategoryNotFoundException(request.CategoryId);
 
             var book = new Book
             {
