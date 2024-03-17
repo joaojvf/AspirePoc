@@ -1,40 +1,32 @@
 ﻿using AspirePoc.Core.Abstractions.Repositories;
 using AspirePoc.Core.Entities;
 using AspirePoc.Core.Exceptions;
+using FluentValidation;
 using MediatR;
 
 namespace AspirePoc.Core.UseCases.Books.UpdateBook
 {
     public class UpdateBookHandler(
         IBookRepository _bookRepository,
-        ICategoryRepository _categoryRepository) : IRequestHandler<UpdateBookRequest, UpdateBookResponse>
+        IValidator<UpdateBookRequest> _validator) : IRequestHandler<UpdateBookRequest, UpdateBookResponse>
     {
         public async Task<UpdateBookResponse> Handle(UpdateBookRequest request, CancellationToken cancellationToken)
         {
-            var existentBook = await _bookRepository.GetBookAsync(request.Id);
-
-            ArgumentNullException.ThrowIfNull(existentBook);
-
-            if (existentBook.Tittle != request.Tittle
-                && existentBook.AuthorName != request.AuthorName)
+            var validationResult = await _validator.ValidateAsync(request, cancellationToken);
+            if (!validationResult.IsValid)
             {
-                throw new BookInvalidUpdateException(id: request.Id);
+                throw new FluentValidationException(validationResult);
             }
 
-            var category = await _categoryRepository
-                .GetCategoryAsync(request.CategoryId) ??
-                throw new CategoryNotFoundException(request.CategoryId);
-
-            UpdateBookFields(request, existentBook, category);
-
+            var existentBook = await _bookRepository.GetBookAsync(request.Id);
+            UpdateBookFields(request, existentBook!);
             await _bookRepository.SaveChangesAsync();
 
             return new();
         }
 
-        private static void UpdateBookFields(UpdateBookRequest request, Book existentBook, Category category)
+        private static void UpdateBookFields(UpdateBookRequest request, Book existentBook)
         {
-            existentBook.Category = category;
             existentBook.CategoryId = request.CategoryId;
             existentBook.ReleaseDate = request.ReleaseDate;
             existentBook.Description = request.Description;

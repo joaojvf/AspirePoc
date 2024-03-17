@@ -1,24 +1,22 @@
 ﻿using AspirePoc.Core.Abstractions.Repositories;
 using AspirePoc.Core.Entities;
 using AspirePoc.Core.Exceptions;
+using FluentValidation;
 using MediatR;
 
 namespace AspirePoc.Core.UseCases.Books.AddBook
 {
     public class AddBookHandler(
-        IBookRepository _bookRepository,
-        ICategoryRepository _categoryRepository) : IRequestHandler<AddBookRequest, AddBookResponse>
+       IValidator<AddBookRequest> _validator,
+       IBookRepository _bookRepository) : IRequestHandler<AddBookRequest, AddBookResponse>
     {
         public async Task<AddBookResponse> Handle(AddBookRequest request, CancellationToken cancellationToken)
         {
-            if (await _bookRepository.HaveABookWithSameNameAndAuthorAsync(request.Tittle, request.AuthorName))
+            var validationResult = await _validator.ValidateAsync(request, cancellationToken);
+            if (!validationResult.IsValid)
             {
-                throw new BookAlreadyAddedException(request.Tittle, request.AuthorName);
+                throw new FluentValidationException(validationResult);
             }
-
-            var category = await _categoryRepository
-                .GetCategoryAsync(request.CategoryId) ??
-                throw new CategoryNotFoundException(request.CategoryId);
 
             var book = new Book
             {
@@ -26,7 +24,7 @@ namespace AspirePoc.Core.UseCases.Books.AddBook
                 AuthorName = request.AuthorName,
                 Description = request.Description,
                 ReleaseDate = request.ReleaseDate,
-                CategoryId = category.Id,
+                CategoryId = request.CategoryId,
             };
 
             return new(await _bookRepository.CreateBookAsync(book));
