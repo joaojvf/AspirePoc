@@ -9,7 +9,7 @@ namespace AspirePoc.Infrastructure.RabbitMQ
     {
         public static IServiceCollection RabbitMQSetup(this IServiceCollection services, IConfiguration configuration)
         {
-            var connection = configuration.GetConnectionString("RabbitMQ");
+            var connection = configuration.GetConnectionString("rabbitmq-aspire");
             if (connection == null)
             {
                 throw new ArgumentNullException($"Invalid connection string to connect to Rabbit: {connection}");

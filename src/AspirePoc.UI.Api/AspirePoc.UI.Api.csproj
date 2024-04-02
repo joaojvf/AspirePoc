@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>false</InvariantGlobalization>
@@ -11,12 +11,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
+    <PackageReference Include="Aspire.Microsoft.Data.SqlClient" Version="9.0.0-preview.2.24162.2" />
+    <PackageReference Include="Aspire.RabbitMQ.Client" Version="9.0.0-preview.2.24162.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AspirePoc.Aspire.ServiceDefaults\AspirePoc.Aspire.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\..\AspirePoc.Aspire.ServiceDefaults\AspirePoc.Aspire.ServiceDefaults.csproj" />
     <ProjectReference Include="..\AspirePoc.Domain\AspirePoc.Core.csproj" />
     <ProjectReference Include="..\AspirePoc.Infrastructure.RabbitMQ\AspirePoc.Infrastructure.RabbitMQ.csproj" />
     <ProjectReference Include="..\AspirePoc.Infrastructure.SqlServer\AspirePoc.Infrastructure.SqlServer.csproj" />
