@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,11 +6,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsAspireHost>true</IsAspireHost>
+    <UserSecretsId>59ffa2b2-7432-406c-a487-ced85baca212</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspire.Hosting" Version="8.0.0-preview.3.24105.21" />
-    <PackageReference Include="Aspire.RabbitMQ.Client" Version="8.0.0-preview.3.24105.21" />
+    <PackageReference Include="Aspire.Hosting.AppHost" Version="8.0.0-preview.5.24201.12" />
+    <PackageReference Include="Aspire.Hosting.RabbitMQ" Version="8.0.0-preview.5.24201.12" />
+    <PackageReference Include="Aspire.Hosting.SqlServer" Version="8.0.0-preview.5.24201.12" />
   </ItemGroup>
 
   <ItemGroup>

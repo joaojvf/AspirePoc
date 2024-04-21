@@ -6,11 +6,13 @@ using AspirePoc.Infrastructure.SqlServer.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddServiceDefaults();
+//builder.AddServiceDefaults();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//builder.AddRabbitMQ("rabbitmq-aspire");
 
 SetupInfrastructure();
 builder.Services.CoreProjectSetup();
