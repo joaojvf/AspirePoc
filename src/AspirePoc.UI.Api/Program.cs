@@ -3,6 +3,7 @@ using AspirePoc.Infrastructure.RabbitMQ;
 using Microsoft.EntityFrameworkCore;
 using AspirePoc.Core.Abstractions.Repositories;
 using AspirePoc.Infrastructure.SqlServer.Repositories;
+using AspirePoc.UI.Api.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,9 @@ builder.Services.AddSwaggerGen();
 SetupInfrastructure();
 builder.Services.CoreProjectSetup();
 builder.Services.RabbitMQSetup(builder.Configuration);
+
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 
 var app = builder.Build();
@@ -30,6 +34,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseExceptionHandler();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

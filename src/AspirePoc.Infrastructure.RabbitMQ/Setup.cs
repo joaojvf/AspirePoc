@@ -17,7 +17,7 @@ namespace AspirePoc.Infrastructure.RabbitMQ
 
             services.AddSingleton<IMessageBus>(new RabbitMQMessageBus(connection));
             services.AddHostedService<CategoryHandler>();
-            return services;
+            return services; 
         }
     }
 }
