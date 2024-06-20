@@ -1,5 +1,4 @@
 ﻿using AspirePoc.Core.Abstractions;
-using AspirePoc.Core.Entities;
 using AspirePoc.Core.UseCases.Categories.AddCategory;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,11 +10,11 @@ namespace AspirePoc.Infrastructure.RabbitMQ.Jobs
     {
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _messageBus.SubscribeAsync<Category>("CreatedCategory", async request => await Handle(request));
+            _messageBus.SubscribeAsync<string>("CreatedCategory", async request => await Handle(request));
             return Task.CompletedTask;
         }
 
-        private async Task Handle(Category category)
+        private async Task Handle(string category)
         {
             using var scope = _serviceProvider.CreateScope();
             var mediator = scope.ServiceProvider.GetService<IMediator>();

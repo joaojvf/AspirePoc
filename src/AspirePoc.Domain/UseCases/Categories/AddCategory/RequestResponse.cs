@@ -3,5 +3,5 @@ using MediatR;
 
 namespace AspirePoc.Core.UseCases.Categories.AddCategory
 {
-    public record AddCategoryRequest(Category Category) : IRequest;
+    public record AddCategoryRequest(string CategoryName) : IRequest;
 }
