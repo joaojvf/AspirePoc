@@ -10,6 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="VolumeMount.AppHost-sql-data\**" />
+    <EmbeddedResource Remove="VolumeMount.AppHost-sql-data\**" />
+    <None Remove="VolumeMount.AppHost-sql-data\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Aspire.Hosting.AppHost" Version="8.0.1" />
     <PackageReference Include="Aspire.Hosting.RabbitMQ" Version="8.0.1" />
     <PackageReference Include="Aspire.Hosting.SqlServer" Version="8.0.1" />
