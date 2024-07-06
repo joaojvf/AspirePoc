@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<!--<Nullable>enable</Nullable>-->
+		<ImplicitUsings>enable</ImplicitUsings>
+		<!-- Make build happy with generated migrations -->
+		<NoWarn>$(NoWarn);IDE0161;IDE0005</NoWarn>
+	</PropertyGroup>
+
+	<!--<ItemGroup>
+		<Compile Include="..\..\Shared\RetryingSqlServerRetryingExecutionStrategy.cs" Link="RetryingSqlServerRetryingExecutionStrategy.cs" />
+	</ItemGroup>-->
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.6">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\AspirePoc.Aspire.ServiceDefaults\AspirePoc.Aspire.ServiceDefaults.csproj" />
+	  <ProjectReference Include="..\AspirePoc.UI.Api\AspirePoc.UI.Api.csproj" />
+	</ItemGroup>
+
+</Project>

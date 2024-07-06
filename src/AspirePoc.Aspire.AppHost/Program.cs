@@ -15,4 +15,7 @@ builder.AddProject<Projects.AspirePoc_UI_Api>("aspirepoc-ui-api")
         .WithReference(rabbitMQ)
         .WithReference(db1);
 
+builder.AddProject<Projects.AspirePoc_Infrastructure_MigrationService>("migration")
+       .WithReference(db1);
+
 builder.Build().Run();

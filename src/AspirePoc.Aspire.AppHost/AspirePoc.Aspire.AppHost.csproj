@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AspirePoc.Infrastructure.MigrationService\AspirePoc.Infrastructure.MigrationService.csproj" />
     <ProjectReference Include="..\AspirePoc.UI.Api\AspirePoc.UI.Api.csproj" />
   </ItemGroup>
 

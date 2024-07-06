@@ -32,6 +32,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspirePoc.Aspire.ServiceDef
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Aspire", "Aspire", "{2C8F1820-8315-4891-9CB7-9FBEBF8985A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspirePoc.Infrastructure.MigrationService", "src\AspirePoc.Infrastructure.MigrationService\AspirePoc.Infrastructure.MigrationService.csproj", "{3B2D2128-4EE8-4F5A-8761-3837BBBD99B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +64,10 @@ Global
 		{D3C1CCB4-016E-43BA-955C-A9AF86ECDFAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3C1CCB4-016E-43BA-955C-A9AF86ECDFAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3C1CCB4-016E-43BA-955C-A9AF86ECDFAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B2D2128-4EE8-4F5A-8761-3837BBBD99B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B2D2128-4EE8-4F5A-8761-3837BBBD99B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B2D2128-4EE8-4F5A-8761-3837BBBD99B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B2D2128-4EE8-4F5A-8761-3837BBBD99B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -77,6 +83,7 @@ Global
 		{D5420E4F-D9A6-4153-8405-F58F68D9FF60} = {2C8F1820-8315-4891-9CB7-9FBEBF8985A0}
 		{D3C1CCB4-016E-43BA-955C-A9AF86ECDFAA} = {2C8F1820-8315-4891-9CB7-9FBEBF8985A0}
 		{2C8F1820-8315-4891-9CB7-9FBEBF8985A0} = {DA91418E-FB96-434E-BD51-93F9C9792A6B}
+		{3B2D2128-4EE8-4F5A-8761-3837BBBD99B7} = {BA79B24C-3E7D-4FF3-8E4F-F887AC52E3F1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9F0E472B-D8B2-4A0E-BE62-B9830EABA676}

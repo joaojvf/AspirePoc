@@ -8,18 +8,18 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace AspirePoc.Infrastructure.SqlServer.Migrations
+namespace AspirePoc.Infrastructure.MigrationService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240207214853_MyFirstMigration")]
-    partial class MyFirstMigration
+    [Migration("20240706211714_MyNewMigration222")]
+    partial class MyNewMigration222
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.1")
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -80,7 +80,10 @@ namespace AspirePoc.Infrastructure.SqlServer.Migrations
             modelBuilder.Entity("AspirePoc.Core.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()

@@ -11,7 +11,7 @@ public class ApplicationContext(DbContextOptions<ApplicationContext> options) : 
     {
         modelBuilder.Entity<Category>()
             .Property(c => c.Id)
-            .ValueGeneratedNever();
+            .ValueGeneratedOnAdd();
         modelBuilder.Entity<Category>().HasData(DefaultEntities.DefaultCategories);
         modelBuilder.Entity<Book>().HasData(DefaultEntities.DefaultBooks);
 

@@ -26,10 +26,6 @@ var app = builder.Build();
 app.MapDefaultEndpoints();
 if (app.Environment.IsDevelopment())
 {
-    using var serviceScope = app.Services.CreateScope();
-    var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationContext>();
-    await dbContext.Database.MigrateAsync();
-
     app.UseSwagger();
     app.UseSwaggerUI();
 }
