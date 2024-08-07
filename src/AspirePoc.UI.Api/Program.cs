@@ -1,5 +1,6 @@
 using AspirePoc.Core;
 using AspirePoc.Infrastructure.RabbitMQ;
+using AspirePoc.Infrastructure.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using AspirePoc.Core.Abstractions.Repositories;
 using AspirePoc.Infrastructure.SqlServer.Repositories;
@@ -52,4 +53,5 @@ void SetupInfrastructure()
 
     builder.Services.AddScoped<IBookRepository, BookRepository>();
     builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+    builder.Services.SetupInfraByAssembly();
 }
