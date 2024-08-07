@@ -1,8 +1,8 @@
 ﻿using AspirePoc.Core.Abstractions.Repositories;
-using AspirePoc.Core.UseCases.Books.AddBook;
+using AspirePoc.Core.UseCases.Books.Validators;
 using FluentValidation;
 
-namespace AspirePoc.Core.UseCases.Books.Validators
+namespace AspirePoc.Core.UseCases.Books.AddBook
 {
     internal class AddBookValidator : BookBaseValidator<AddBookRequest>
     {

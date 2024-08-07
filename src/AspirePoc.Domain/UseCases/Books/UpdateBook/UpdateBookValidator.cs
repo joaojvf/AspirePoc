@@ -1,8 +1,8 @@
 ﻿using AspirePoc.Core.Abstractions.Repositories;
-using AspirePoc.Core.UseCases.Books.UpdateBook;
+using AspirePoc.Core.UseCases.Books.Validators;
 using FluentValidation;
 
-namespace AspirePoc.Core.UseCases.Books.Validators
+namespace AspirePoc.Core.UseCases.Books.UpdateBook
 {
     internal class UpdateBookValidator : BookBaseValidator<UpdateBookRequest>
     {
@@ -20,7 +20,7 @@ namespace AspirePoc.Core.UseCases.Books.Validators
 
         private async Task<bool> ValidatedWithSuccess(UpdateBookRequest request, ValidationContext<UpdateBookRequest> context)
         {
-            var existentBook = await _bookRepository.GetBookAsync(request.Id);            
+            var existentBook = await _bookRepository.GetBookAsync(request.Id);
 
             if (existentBook is null)
             {

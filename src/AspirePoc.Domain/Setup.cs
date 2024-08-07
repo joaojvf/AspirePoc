@@ -1,7 +1,5 @@
-﻿using AspirePoc.Core.UseCases.Books;
-using AspirePoc.Core.UseCases.Books.AddBook;
+﻿using AspirePoc.Core.UseCases.Books.AddBook;
 using AspirePoc.Core.UseCases.Books.UpdateBook;
-using AspirePoc.Core.UseCases.Books.Validators;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
