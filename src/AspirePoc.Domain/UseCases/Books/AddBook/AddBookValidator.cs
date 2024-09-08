@@ -17,6 +17,6 @@ namespace AspirePoc.Core.UseCases.Books.AddBook
                 .WithMessage($"A book with the same Tittle and Author already exists.");
         }
 
-        private async Task<bool> BookIsUniqueAsync(AddBookRequest request) => await _bookRepository.HaveABookWithSameNameAndAuthorAsync(request.Tittle, request.AuthorName);
+        private async Task<bool> BookIsUniqueAsync(AddBookRequest request) => !(await _bookRepository.HaveABookWithSameNameAndAuthorAsync(request.Tittle, request.AuthorName));
     }
 }

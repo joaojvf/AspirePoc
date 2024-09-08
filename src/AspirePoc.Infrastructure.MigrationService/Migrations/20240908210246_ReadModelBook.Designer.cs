@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AspirePoc.Infrastructure.MigrationService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20240908210246_ReadModelBook")]
+    partial class ReadModelBook
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,7 +69,7 @@ namespace AspirePoc.Infrastructure.MigrationService.Migrations
                             AuthorName = "Colleen Hoover",
                             CategoryId = 1,
                             Description = "It Ends with Us is a romance novel by Colleen Hoover, published by Atria Books on August 2, 2016. Based on the relationship between her mother and father, Hoover described it as 'the hardest book I've ever written'",
-                            Guid = new Guid("56582a7c-093d-43c0-b661-e7ff0f9bf4b7"),
+                            Guid = new Guid("046cea45-6fcd-4d88-9fdb-2f762fbe9691"),
                             ReleaseDate = new DateTime(2016, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Tittle = "It Ends with Us"
                         },
@@ -76,7 +79,7 @@ namespace AspirePoc.Infrastructure.MigrationService.Migrations
                             AuthorName = "Suzanne Collins",
                             CategoryId = 3,
                             Description = "The Hunger Games is a 2008 dystopian young adult novel by the American writer Suzanne Collins. It is written in the perspective of 16-year-old Katniss Everdeen, who lives in the future, post-apocalyptic nation of Panem in North America",
-                            Guid = new Guid("c257e1b4-ce4d-4669-a733-9a104e5522a7"),
+                            Guid = new Guid("0276e42c-1f4f-4186-ac32-950c1797c85c"),
                             ReleaseDate = new DateTime(2008, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Tittle = "The Hunger Games"
                         });
@@ -85,6 +88,7 @@ namespace AspirePoc.Infrastructure.MigrationService.Migrations
             modelBuilder.Entity("AspirePoc.Core.Entities.BookReadModel", b =>
                 {
                     b.Property<Guid>("Guid")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")

@@ -11,7 +11,7 @@ namespace AspirePoc.Infrastructure.SqlServer.Repositories
         public async Task<int> CreateBookAsync(Book book)
         {
             await _context.AddAsync(book);
-            await _context.SaveChangesAsync();
+            await SaveChangesAsync();
             return book.Id;
         }
 

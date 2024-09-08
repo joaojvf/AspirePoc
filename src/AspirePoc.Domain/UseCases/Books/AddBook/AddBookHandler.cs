@@ -1,5 +1,6 @@
 ﻿using AspirePoc.Core.Abstractions.Repositories;
 using AspirePoc.Core.Entities;
+using AspirePoc.Core.Events;
 using AspirePoc.Core.Exceptions;
 using FluentValidation;
 using MediatR;
@@ -7,6 +8,7 @@ using MediatR;
 namespace AspirePoc.Core.UseCases.Books.AddBook
 {
     public class AddBookHandler(
+        IMediator _mediator,
        IValidator<AddBookRequest> _validator,
        IBookRepository _bookRepository) : IRequestHandler<AddBookRequest, AddBookResponse>
     {
@@ -27,7 +29,12 @@ namespace AspirePoc.Core.UseCases.Books.AddBook
                 CategoryId = request.CategoryId,
             };
 
-            return new(await _bookRepository.CreateBookAsync(book));
+            var res = await _bookRepository.CreateBookAsync(book);
+            book.Id = res;
+
+            await _mediator.Publish(new BookCreatedEvent(book), cancellationToken);
+            return new AddBookResponse(res);
         }
+
     }
 }

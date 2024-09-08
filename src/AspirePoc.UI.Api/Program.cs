@@ -52,6 +52,7 @@ void SetupInfrastructure()
     settings.DisableRetry = true);
 
     builder.Services.AddScoped<IBookRepository, BookRepository>();
+    builder.Services.AddScoped<IReadModelBookRepository, ReadModelBookRepository>();
     builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
     builder.Services.SetupInfraByAssembly();
 }
