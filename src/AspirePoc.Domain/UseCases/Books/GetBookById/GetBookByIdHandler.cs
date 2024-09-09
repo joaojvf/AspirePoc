@@ -4,11 +4,11 @@ using MediatR;
 
 namespace AspirePoc.Core.UseCases.Books.GetBookById
 {
-    public class GetBooksByIdHandler(IBookRepository _bookRepository) : IRequestHandler<GetByIdBookRequest, GetByIdBookResponse>
+    public class GetBooksByIdHandler(IReadModelBookRepository _bookRepository) : IRequestHandler<GetByIdBookRequest, GetByIdBookResponse>
     {
         public async Task<GetByIdBookResponse> Handle(GetByIdBookRequest request, CancellationToken cancellationToken)
         {
-            var res = await _bookRepository.GetBookAsync(request.Id);
+            var res = await _bookRepository.GetReadModelBookAsync(request.Id);
 
             if (res is null)
             {

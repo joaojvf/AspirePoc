@@ -36,9 +36,11 @@ public class ApplicationContext(DbContextOptions<ApplicationContext> options) : 
 
             entity.Property(e => e.SerializedObject)
                 .IsRequired();
+
         });
 
         modelBuilder.Entity<Book>().HasData(DefaultEntities.DefaultBooks);
+        //modelBuilder.Entity<BookReadModel>().HasData(DefaultEntities.DefaultBooks);
         modelBuilder.Entity<Category>().HasData(DefaultEntities.DefaultCategories);
 
         base.OnModelCreating(modelBuilder);

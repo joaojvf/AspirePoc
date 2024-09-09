@@ -1,5 +1,6 @@
 ﻿using AspirePoc.Core.Abstractions.Repositories;
 using AspirePoc.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace AspirePoc.Infrastructure.SqlServer.Repositories
 {
@@ -11,9 +12,11 @@ namespace AspirePoc.Infrastructure.SqlServer.Repositories
             await _context.AddAsync(book);
         }
 
-        public Task<Book?> GetReadModelBookAsync(int id)
+        public async Task<Book?> GetReadModelBookAsync(int id)
         {
-            throw new NotImplementedException();
+            var readModel = await _context.BooksReadModel.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+
+            return readModel is null ? null : readModel.DeserializedBook;
         }
 
         public async Task SaveChangesAsync() => await _context.SaveChangesAsync();

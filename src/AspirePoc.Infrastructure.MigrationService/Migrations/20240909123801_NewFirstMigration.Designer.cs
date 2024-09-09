@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AspirePoc.Infrastructure.MigrationService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240908210246_ReadModelBook")]
-    partial class ReadModelBook
+    [Migration("20240909123801_NewFirstMigration")]
+    partial class NewFirstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,7 +69,7 @@ namespace AspirePoc.Infrastructure.MigrationService.Migrations
                             AuthorName = "Colleen Hoover",
                             CategoryId = 1,
                             Description = "It Ends with Us is a romance novel by Colleen Hoover, published by Atria Books on August 2, 2016. Based on the relationship between her mother and father, Hoover described it as 'the hardest book I've ever written'",
-                            Guid = new Guid("046cea45-6fcd-4d88-9fdb-2f762fbe9691"),
+                            Guid = new Guid("499bb563-61af-4d2a-8efe-8e3524341e82"),
                             ReleaseDate = new DateTime(2016, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Tittle = "It Ends with Us"
                         },
@@ -79,7 +79,7 @@ namespace AspirePoc.Infrastructure.MigrationService.Migrations
                             AuthorName = "Suzanne Collins",
                             CategoryId = 3,
                             Description = "The Hunger Games is a 2008 dystopian young adult novel by the American writer Suzanne Collins. It is written in the perspective of 16-year-old Katniss Everdeen, who lives in the future, post-apocalyptic nation of Panem in North America",
-                            Guid = new Guid("0276e42c-1f4f-4186-ac32-950c1797c85c"),
+                            Guid = new Guid("c27eef8d-5d90-4f2f-835b-6fe0cee02857"),
                             ReleaseDate = new DateTime(2008, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Tittle = "The Hunger Games"
                         });
@@ -88,7 +88,6 @@ namespace AspirePoc.Infrastructure.MigrationService.Migrations
             modelBuilder.Entity("AspirePoc.Core.Entities.BookReadModel", b =>
                 {
                     b.Property<Guid>("Guid")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")

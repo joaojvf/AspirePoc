@@ -1,7 +1,5 @@
 ﻿using AspirePoc.Core.Abstractions.Repositories;
 using AspirePoc.Core.Entities;
-using AspirePoc.Core.UseCases.Books.GetBooks;
-using AspNetCore.IQueryable.Extensions.Filter;
 using Microsoft.EntityFrameworkCore;
 
 namespace AspirePoc.Infrastructure.SqlServer.Repositories
@@ -10,6 +8,7 @@ namespace AspirePoc.Infrastructure.SqlServer.Repositories
     {
         public async Task<int> CreateBookAsync(Book book)
         {
+            book.Guid = Guid.NewGuid();
             await _context.AddAsync(book);
             await SaveChangesAsync();
             return book.Id;
@@ -19,12 +18,6 @@ namespace AspirePoc.Infrastructure.SqlServer.Repositories
             Books
             .Include(x => x.Category)
             .FirstOrDefaultAsync(x => x.Id == id);
-
-        public IQueryable<Book> GetBooksQueryAsync(GetBooksRequest request)
-        {
-            var query = _context.Books.AsQueryable().Filter(request);
-            return query;
-        }
 
         public async Task<bool> HaveABookWithSameNameAndAuthorAsync(string tittle, string authorName) => await _context.Books.AnyAsync(
                 x => x.Tittle.ToUpper() == tittle.ToUpper()

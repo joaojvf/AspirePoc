@@ -1,4 +1,5 @@
 ﻿using AspirePoc.Core.Entities;
+using AspirePoc.Core.UseCases.Books.GetBooks;
 
 namespace AspirePoc.Core.Abstractions.Repositories
 {

@@ -1,10 +1,10 @@
-﻿using AspirePoc.Core.Entities.Base;
-using AspNetCore.IQueryable.Extensions;
+﻿using AspirePoc.Core.Entities;
+using AspirePoc.Core.Entities.Base;
 using MediatR;
 
 namespace AspirePoc.Core.UseCases.Books.GetBooks
 {
-    public record GetBooksRequest(string? Tittle, string? Description, int Page, int PageSize) : IRequest<PagedList<GetBooksResponse>>, ICustomQueryable;
+    public record GetBooksRequest(string? Tittle, string? Description, int Page = 1, int PageSize = 50) : IRequest<PagedList<GetBooksResponse>>;
 
-    public record GetBooksResponse(string Tittle, string Description, DateTime ReleaseDate, string Author, string Category);
+    public record GetBooksResponse(Book Book);
 }

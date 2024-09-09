@@ -7,7 +7,6 @@ namespace AspirePoc.Core.Abstractions.Repositories
     {
         Task<int> CreateBookAsync(Book book);
         Task<Book?> GetBookAsync(int id);
-        IQueryable<Book> GetBooksQueryAsync(GetBooksRequest request);
         Task<bool> HaveABookWithSameNameAndAuthorAsync(string tittle, string authorName);
         Task SaveChangesAsync();
     }

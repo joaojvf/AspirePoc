@@ -1,7 +1,7 @@
 ﻿using AspirePoc.Core.Entities.Base;
 using AspirePoc.Core.UseCases.Books.GetBooks;
-using AspNetCore.IQueryable.Extensions.Filter;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace AspirePoc.Infrastructure.SqlServer.Books
 {
@@ -9,16 +9,23 @@ namespace AspirePoc.Infrastructure.SqlServer.Books
     {
         public Task<PagedList<GetBooksResponse>> Handle(GetBooksRequest request, CancellationToken cancellationToken)
         {
-            var booksQuery = context.Books.AsQueryable()
-               .Filter(request)
-               .Select(x => new GetBooksResponse(
-                   x.Tittle,
-                   x.Description,
-                   x.ReleaseDate,
-                   x.AuthorName,
-                   x.Category.Name));
+            var booksQuery = context.BooksReadModel.AsNoTracking().AsQueryable();
 
-            var res = PagedList<GetBooksResponse>.Create(booksQuery, request.Page, request.PageSize);
+            if (!string.IsNullOrEmpty(request.Tittle))
+            {
+                booksQuery = booksQuery.Where(b => b.Title.Contains(request.Tittle));
+            }
+
+            if (!string.IsNullOrEmpty(request.Description))
+            {
+                booksQuery = booksQuery.Where(b => b.Description.Contains(request.Description));
+            }
+
+            var pagedBooks = booksQuery
+                .OrderBy(b => b.Title)
+                .Select(b => new GetBooksResponse(b.DeserializedBook));
+
+            var res = PagedList<GetBooksResponse>.Create(pagedBooks, request.Page, request.PageSize);
             return Task.FromResult(res);
         }
     }

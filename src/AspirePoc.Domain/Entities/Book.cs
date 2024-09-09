@@ -15,6 +15,6 @@ namespace AspirePoc.Core.Entities
         public required string AuthorName { get; set; }
         public required int CategoryId { get; set; }
         public Category Category { get; set; }
-        public Guid Guid { get; set; } = Guid.NewGuid();
+        public Guid Guid { get; set; }
     }
 }
