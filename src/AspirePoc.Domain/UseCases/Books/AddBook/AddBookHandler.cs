@@ -1,7 +1,7 @@
 ﻿using AspirePoc.Core.Abstractions.Repositories;
 using AspirePoc.Core.Entities;
-using AspirePoc.Core.Events;
 using AspirePoc.Core.Exceptions;
+using AspirePoc.Core.Meessages;
 using FluentValidation;
 using MediatR;
 
@@ -29,11 +29,14 @@ namespace AspirePoc.Core.UseCases.Books.AddBook
                 CategoryId = request.CategoryId,
             };
 
-            var res = await _bookRepository.CreateBookAsync(book);
-            book.Id = res;
+            var id = await _bookRepository.CreateBookAsync(book);
+            book.Id = id;
 
-            await _mediator.Publish(new BookCreatedEvent(book), cancellationToken);
-            return new AddBookResponse(res);
+            book.AddMessage(new BookCreatedEvent(book));
+            book.AddMessage(new BookDocument(book));
+
+            await _bookRepository.SaveChangesAsync();
+            return new AddBookResponse(id);
         }
 
     }

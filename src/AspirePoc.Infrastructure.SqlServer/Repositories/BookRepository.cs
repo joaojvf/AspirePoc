@@ -1,16 +1,18 @@
 ﻿using AspirePoc.Core.Abstractions.Repositories;
 using AspirePoc.Core.Entities;
+using AspirePoc.Core.Helpers;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace AspirePoc.Infrastructure.SqlServer.Repositories
 {
-    public class BookRepository(ApplicationContext _context) : IBookRepository
+    public class BookRepository(ApplicationContext _context, IMediator _mediator) : IBookRepository
     {
+
         public async Task<int> CreateBookAsync(Book book)
-        {
-            book.Guid = Guid.NewGuid();
+        {            
             await _context.AddAsync(book);
-            await SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return book.Id;
         }
 
@@ -23,7 +25,10 @@ namespace AspirePoc.Infrastructure.SqlServer.Repositories
                 x => x.Tittle.ToUpper() == tittle.ToUpper()
                 && x.AuthorName.ToUpper() == authorName.ToUpper());
 
-        public async Task SaveChangesAsync() => await _context.SaveChangesAsync();
+        public async Task SaveChangesAsync() {            
+            await _mediator.PublishMessages(_context);
+            await _context.SaveChangesAsync();
+        }
 
     }
 }

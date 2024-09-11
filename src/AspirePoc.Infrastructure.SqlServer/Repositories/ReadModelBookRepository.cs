@@ -21,9 +21,12 @@ namespace AspirePoc.Infrastructure.SqlServer.Repositories
 
         public async Task SaveChangesAsync() => await _context.SaveChangesAsync();
 
-        public Task UpdateReadModelBookAsync(BookReadModel book)
+        public async Task UpdateReadModelBookAsync(BookReadModel book)
         {
-            throw new NotImplementedException();
+            var existentBook = await _context.BooksReadModel.FindAsync(book.Guid);
+            _context.BooksReadModel.Remove(existentBook!);
+            await _context.BooksReadModel.AddAsync(book!);
+
         }
     }
 }

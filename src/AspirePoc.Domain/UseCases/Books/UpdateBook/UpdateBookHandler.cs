@@ -1,6 +1,7 @@
 ﻿using AspirePoc.Core.Abstractions.Repositories;
 using AspirePoc.Core.Entities;
 using AspirePoc.Core.Exceptions;
+using AspirePoc.Core.Meessages;
 using FluentValidation;
 using MediatR;
 
@@ -20,6 +21,8 @@ namespace AspirePoc.Core.UseCases.Books.UpdateBook
 
             var existentBook = await _bookRepository.GetBookAsync(request.Id);
             UpdateBookFields(request, existentBook!);
+            
+            existentBook!.AddMessage(new BookUpdatedEvent(existentBook));
             await _bookRepository.SaveChangesAsync();
 
             return new();

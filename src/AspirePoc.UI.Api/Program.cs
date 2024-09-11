@@ -54,5 +54,6 @@ void SetupInfrastructure()
     builder.Services.AddScoped<IBookRepository, BookRepository>();
     builder.Services.AddScoped<IReadModelBookRepository, ReadModelBookRepository>();
     builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+    builder.Services.AddScoped<IStoredEventsRepository, StoredEventsRepository>();
     builder.Services.SetupInfraByAssembly();
 }

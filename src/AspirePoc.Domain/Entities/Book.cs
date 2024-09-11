@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using AspirePoc.Core.Interfaces;
+using AspirePoc.Core.Entities.Base;
 
 namespace AspirePoc.Core.Entities
 {
-    public class Book : IAggregateRoot
+    public class Book : Entity, IAggregateRoot
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
@@ -15,6 +16,5 @@ namespace AspirePoc.Core.Entities
         public required string AuthorName { get; set; }
         public required int CategoryId { get; set; }
         public Category Category { get; set; }
-        public Guid Guid { get; set; }
     }
 }

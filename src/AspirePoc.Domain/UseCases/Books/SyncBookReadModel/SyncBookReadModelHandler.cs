@@ -1,32 +1,40 @@
 ﻿using AspirePoc.Core.Abstractions.Repositories;
 using AspirePoc.Core.Entities;
-using AspirePoc.Core.Events;
+using AspirePoc.Core.Meessages;
+using AspirePoc.Core.Meessages.Base;
 using MediatR;
 using System.Text.Json;
 
 namespace AspirePoc.Core.UseCases.Books.SyncBookReadModel
 {
-    public class SyncBookReadModelHandler(IReadModelBookRepository _bookRepository) : INotificationHandler<BookCreatedEvent>
+    public class SyncBookReadModelHandler(IReadModelBookRepository _bookRepository) : INotificationHandler<BookCreatedEvent>, INotificationHandler<BookUpdatedEvent>
     {
         public async Task Handle(BookCreatedEvent notification, CancellationToken cancellationToken)
         {
-            await SyncReadModel(notification.Book);
+            var bookReadModel = GetReadModelBook(notification);
+            await _bookRepository.CreateReadModelBookAsync(bookReadModel);
+            await _bookRepository.SaveChangesAsync();
         }
 
-        private async Task SyncReadModel(Book book)
+        private static BookReadModel GetReadModelBook(StoredEvent notification)
         {
-            var serializedBook = JsonSerializer.Serialize(book);
+            var book = JsonSerializer.Deserialize<Book>(notification.Data);
 
             var bookRead = new BookReadModel
             {
-                Guid = book.Guid,
+                Guid = book!.Guid,
                 Id = book.Id,
                 Title = book.Tittle,
                 Description = book.Description,
-                SerializedObject = serializedBook
+                SerializedObject = notification.Data
             };
+            return bookRead;
+        }
 
-            await _bookRepository.CreateReadModelBookAsync(bookRead);
+        public async Task Handle(BookUpdatedEvent notification, CancellationToken cancellationToken)
+        {
+            var bookReadModel = GetReadModelBook(notification);
+            await _bookRepository.UpdateReadModelBookAsync(bookReadModel);
             await _bookRepository.SaveChangesAsync();
         }
     }
