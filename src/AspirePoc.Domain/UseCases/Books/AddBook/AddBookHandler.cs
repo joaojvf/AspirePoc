@@ -8,7 +8,7 @@ using MediatR;
 namespace AspirePoc.Core.UseCases.Books.AddBook
 {
     public class AddBookHandler(
-        IMediator _mediator,
+       IMediator _mediator,
        IValidator<AddBookRequest> _validator,
        IBookRepository _bookRepository) : IRequestHandler<AddBookRequest, AddBookResponse>
     {
