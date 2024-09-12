@@ -28,5 +28,58 @@ namespace AspirePoc.Infrastructure.SqlServer.Repositories
             await _context.BooksReadModel.AddAsync(book!);
 
         }
+
+        public async Task CreateOrReplaceReadModelBooksAsync(List<BookReadModel> readModelBooks, CancellationToken cancellationToken)
+        {
+            var idsToDelete = readModelBooks.Select(book => book.Id).ToList();
+            var strategy = _context.Database.CreateExecutionStrategy();
+
+            await strategy.ExecuteAsync(async () =>
+            {
+                using var transaction = _context.Database.BeginTransaction();
+                try
+                {
+                    var books = await _context.BooksReadModel.Where(x => idsToDelete.Contains(x.Id)).ToListAsync();
+                    _context.BooksReadModel.RemoveRange(books);
+                    _context.BooksReadModel.AddRange(readModelBooks);
+
+                    _context.SaveChanges();
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw new Exception("An error occurred while replacing the books.", ex);
+                }
+            });
+
+        }
+
+        public async Task CreateOrReplaceAllReadModelBooksAsync(List<BookReadModel> readModelBooks, CancellationToken cancellationToken)
+        {
+            var strategy = _context.Database.CreateExecutionStrategy();
+
+            await strategy.ExecuteAsync(async () =>
+            {
+                using var transaction = _context.Database.BeginTransaction();
+                try
+                {
+
+                    var allBooks = await _context.BooksReadModel.ToListAsync();
+                    _context.BooksReadModel.RemoveRange(allBooks);
+                    _context.BooksReadModel.AddRange(readModelBooks);
+
+                    _context.SaveChanges();
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw new Exception("An error occurred while replacing all the books.", ex);
+                }
+            });
+        }
     }
 }

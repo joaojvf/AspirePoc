@@ -16,10 +16,22 @@ namespace AspirePoc.Infrastructure.SqlServer.Repositories
             return book.Id;
         }
 
+        public async Task<List<Book>> GetAllToRebuildAsync(CancellationToken cancellationToken)
+        {
+            return await _context.Books.ToListAsync();
+        }
+
         public async Task<Book?> GetBookAsync(int id) => await _context.
             Books
             .Include(x => x.Category)
             .FirstOrDefaultAsync(x => x.Id == id);
+
+        public async Task<List<Book>> GetBooksById(IReadOnlyList<Guid> guids) => await _context
+            .Books
+            .AsNoTracking()
+            .Include(x => x.Category)            
+            .Where(x => guids.Contains(x.Guid))
+            .ToListAsync();
 
         public async Task<bool> HaveABookWithSameNameAndAuthorAsync(string tittle, string authorName) => await _context.Books.AnyAsync(
                 x => x.Tittle.ToUpper() == tittle.ToUpper()

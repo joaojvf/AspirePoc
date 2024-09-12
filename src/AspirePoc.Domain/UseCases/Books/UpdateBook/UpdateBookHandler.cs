@@ -1,7 +1,7 @@
 ﻿using AspirePoc.Core.Abstractions.Repositories;
 using AspirePoc.Core.Entities;
 using AspirePoc.Core.Exceptions;
-using AspirePoc.Core.Meessages;
+using AspirePoc.Core.Messages;
 using FluentValidation;
 using MediatR;
 

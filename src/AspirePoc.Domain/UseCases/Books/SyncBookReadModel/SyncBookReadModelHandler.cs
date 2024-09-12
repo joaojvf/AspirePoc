@@ -1,7 +1,6 @@
 ﻿using AspirePoc.Core.Abstractions.Repositories;
 using AspirePoc.Core.Entities;
-using AspirePoc.Core.Meessages;
-using AspirePoc.Core.Meessages.Base;
+using AspirePoc.Core.Messages;
 using MediatR;
 using System.Text.Json;
 
@@ -13,6 +12,13 @@ namespace AspirePoc.Core.UseCases.Books.SyncBookReadModel
         {
             var bookReadModel = GetReadModelBook(notification);
             await _bookRepository.CreateReadModelBookAsync(bookReadModel);
+            await _bookRepository.SaveChangesAsync();
+        }
+
+        public async Task Handle(BookUpdatedEvent notification, CancellationToken cancellationToken)
+        {
+            var bookReadModel = GetReadModelBook(notification);
+            await _bookRepository.UpdateReadModelBookAsync(bookReadModel);
             await _bookRepository.SaveChangesAsync();
         }
 
@@ -29,13 +35,6 @@ namespace AspirePoc.Core.UseCases.Books.SyncBookReadModel
                 SerializedObject = notification.Data
             };
             return bookRead;
-        }
-
-        public async Task Handle(BookUpdatedEvent notification, CancellationToken cancellationToken)
-        {
-            var bookReadModel = GetReadModelBook(notification);
-            await _bookRepository.UpdateReadModelBookAsync(bookReadModel);
-            await _bookRepository.SaveChangesAsync();
         }
     }
 }

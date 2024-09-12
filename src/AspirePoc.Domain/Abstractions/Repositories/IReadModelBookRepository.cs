@@ -1,5 +1,4 @@
 ﻿using AspirePoc.Core.Entities;
-using AspirePoc.Core.UseCases.Books.GetBooks;
 
 namespace AspirePoc.Core.Abstractions.Repositories
 {
@@ -9,5 +8,7 @@ namespace AspirePoc.Core.Abstractions.Repositories
         Task UpdateReadModelBookAsync(BookReadModel book);
         Task<Book?> GetReadModelBookAsync(int id);
         Task SaveChangesAsync();
+        Task CreateOrReplaceAllReadModelBooksAsync(List<BookReadModel> readModelBooks, CancellationToken cancellationToken);
+        Task CreateOrReplaceReadModelBooksAsync(List<BookReadModel> readModelBooks, CancellationToken cancellationToken);
     }
 }

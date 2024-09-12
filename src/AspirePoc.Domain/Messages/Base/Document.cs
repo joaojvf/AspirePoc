@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace AspirePoc.Core.Meessages.Base
+namespace AspirePoc.Core.Messages.Base
 {
     public interface IDocument : IMessage
     {

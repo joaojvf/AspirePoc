@@ -1,4 +1,4 @@
-﻿using AspirePoc.Core.Meessages.Base;
+﻿using AspirePoc.Core.Messages.Base;
 
 namespace AspirePoc.Core.Entities.Base
 {

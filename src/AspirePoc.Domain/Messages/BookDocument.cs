@@ -1,7 +1,7 @@
 ﻿using AspirePoc.Core.Entities;
-using AspirePoc.Core.Meessages.Base;
+using AspirePoc.Core.Messages.Base;
 
-namespace AspirePoc.Core.Meessages
+namespace AspirePoc.Core.Messages
 {
     public class BookDocument : StoredEvent, IDocument
     {
