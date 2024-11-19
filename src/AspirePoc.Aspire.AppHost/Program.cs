@@ -1,5 +1,6 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
+
 var rabbitMQPwd = builder.AddParameter("rabbitMQPwd");
 var sqlPwd = builder.AddParameter("sql-pwd");
 
@@ -19,6 +20,6 @@ var rabbitMQ = builder
 builder.AddProject<Projects.AspirePoc_UI_Api>("aspirepoc-ui-api")
         .WithReference(rabbitMQ)
         .WithReference(db1)
-        .WithReference(migration);
+        .WithReference(migration); ;
 
 builder.Build().Run();

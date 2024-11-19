@@ -27,13 +27,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspirePoc.Aspire.AppHost", "src\AspirePoc.Aspire.AppHost\AspirePoc.Aspire.AppHost.csproj", "{D5420E4F-D9A6-4153-8405-F58F68D9FF60}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspirePoc.Aspire.ServiceDefaults", "src\AspirePoc.Aspire.ServiceDefaults\AspirePoc.Aspire.ServiceDefaults.csproj", "{D3C1CCB4-016E-43BA-955C-A9AF86ECDFAA}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Aspire", "Aspire", "{2C8F1820-8315-4891-9CB7-9FBEBF8985A0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspirePoc.Infrastructure.MigrationService", "src\AspirePoc.Infrastructure.MigrationService\AspirePoc.Infrastructure.MigrationService.csproj", "{3B2D2128-4EE8-4F5A-8761-3837BBBD99B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspirePoc.Aspire.AppHost", "src\AspirePoc.Aspire.AppHost\AspirePoc.Aspire.AppHost.csproj", "{3C64EE3C-5A67-44B8-86B2-6AAB0B140A3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspirePoc.Aspire.ServiceDefaults", "src\AspirePoc.Aspire.ServiceDefaults\AspirePoc.Aspire.ServiceDefaults.csproj", "{BAF3C953-AA24-4432-9486-29993209B2D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,18 +57,18 @@ Global
 		{2A9D00EE-FE24-4CA3-8F88-59D406184ACB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A9D00EE-FE24-4CA3-8F88-59D406184ACB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A9D00EE-FE24-4CA3-8F88-59D406184ACB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D5420E4F-D9A6-4153-8405-F58F68D9FF60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D5420E4F-D9A6-4153-8405-F58F68D9FF60}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D5420E4F-D9A6-4153-8405-F58F68D9FF60}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D5420E4F-D9A6-4153-8405-F58F68D9FF60}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D3C1CCB4-016E-43BA-955C-A9AF86ECDFAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D3C1CCB4-016E-43BA-955C-A9AF86ECDFAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D3C1CCB4-016E-43BA-955C-A9AF86ECDFAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D3C1CCB4-016E-43BA-955C-A9AF86ECDFAA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3B2D2128-4EE8-4F5A-8761-3837BBBD99B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3B2D2128-4EE8-4F5A-8761-3837BBBD99B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B2D2128-4EE8-4F5A-8761-3837BBBD99B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B2D2128-4EE8-4F5A-8761-3837BBBD99B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C64EE3C-5A67-44B8-86B2-6AAB0B140A3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C64EE3C-5A67-44B8-86B2-6AAB0B140A3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C64EE3C-5A67-44B8-86B2-6AAB0B140A3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C64EE3C-5A67-44B8-86B2-6AAB0B140A3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAF3C953-AA24-4432-9486-29993209B2D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAF3C953-AA24-4432-9486-29993209B2D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAF3C953-AA24-4432-9486-29993209B2D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAF3C953-AA24-4432-9486-29993209B2D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,8 +81,6 @@ Global
 		{5BDCAB70-7AEF-41D0-AC3E-D305C5FE4AE3} = {BA79B24C-3E7D-4FF3-8E4F-F887AC52E3F1}
 		{0FBEB036-4881-4B53-9201-D2EF3BA35EBD} = {BA79B24C-3E7D-4FF3-8E4F-F887AC52E3F1}
 		{2A9D00EE-FE24-4CA3-8F88-59D406184ACB} = {E471BF51-BF84-4607-BBE9-6A7E92C13AEB}
-		{D5420E4F-D9A6-4153-8405-F58F68D9FF60} = {2C8F1820-8315-4891-9CB7-9FBEBF8985A0}
-		{D3C1CCB4-016E-43BA-955C-A9AF86ECDFAA} = {2C8F1820-8315-4891-9CB7-9FBEBF8985A0}
 		{2C8F1820-8315-4891-9CB7-9FBEBF8985A0} = {DA91418E-FB96-434E-BD51-93F9C9792A6B}
 		{3B2D2128-4EE8-4F5A-8761-3837BBBD99B7} = {BA79B24C-3E7D-4FF3-8E4F-F887AC52E3F1}
 	EndGlobalSection
