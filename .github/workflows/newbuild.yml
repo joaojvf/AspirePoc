@@ -22,7 +22,7 @@ jobs:
         with:
           dotnet-version: '9.0.x' # Adjust the version as needed
           cache: true
-          cache-dependency-path: ./**/packages.lock.json ## adding the path where the cache is saved
+          # cache-dependency-path: ./**/packages.lock.json ## adding the path where the cache is saved
 
       - name: Restore dependencies
         run: dotnet restore
