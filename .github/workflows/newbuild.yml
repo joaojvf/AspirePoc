@@ -7,6 +7,7 @@ on:
   pull_request:
     branches:
       - master
+  workflow_dispatch: ## turn available trigger manually the workflow
 
 jobs:
   build:
@@ -20,6 +21,8 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x' # Adjust the version as needed
+          cache: true
+          cache-dependency-path: ./src/**/packages.lock.json ## adding the path where the cache is saved
 
       - name: Restore dependencies
         run: dotnet restore
