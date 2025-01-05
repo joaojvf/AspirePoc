@@ -39,7 +39,8 @@ jobs:
           git push --tags
         if: github.ref == 'refs/heads/master'          
 
-  build:
+  build-and-tests:
+    needs: versioning # dependency between jobs    
     runs-on: ubuntu-latest
     name: Build Project
 
@@ -53,6 +54,14 @@ jobs:
           dotnet-version: '9.0.x' # Adjust the version as needed
           cache: true
           cache-dependency-path: ./src/**/packages.lock.json # Needs to enable cache directly in the main project first, adding that flag as true RestorePackagesWithLockFile
+
+      - uses: github/super-linter@v6
+        env:
+          DEFAULT_BRANCH: "main"
+          VALIDATE_ALL_CODEBASE: "false"
+          VALIDATE_YAML: "true"
+          VALIDATE_CSHARP: "true"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}          
 
       - name: Restore dependencies
         run: dotnet restore
