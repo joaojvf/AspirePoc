@@ -7,6 +7,7 @@ on:
   pull_request:
     branches:
       - master
+  workflow_dispatch: ## turn available trigger manually the workflow
 
 jobs:
   build:
@@ -20,9 +21,24 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x' # Adjust the version as needed
+          cache: true
+          cache-dependency-path: ./src/**/packages.lock.json # Needs to enable cache directly in the main project first, adding that flag as true RestorePackagesWithLockFile
 
       - name: Restore dependencies
         run: dotnet restore
 
       - name: Build the project
         run: dotnet build --configuration Release --no-restore
+
+        # Do the tests and generate the file
+      - name: Test
+        run: |
+          dotnet test --no-build --no-restore ./AspirePoc.sln --configuration Release --logger trx --results-directory "TestResults"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dotnet-test-results
+          path: TestResults
+      
+
+          
+      
