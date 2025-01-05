@@ -9,6 +9,11 @@ on:
       - master
   workflow_dispatch: ## turn available trigger manually the workflow
 
+  # validate all workflows in the same branch, if any job fails, the others will be canceled
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   versioning: 
     runs-on: ubuntu-latest
@@ -79,7 +84,23 @@ jobs:
         with:
           name: dotnet-test-results
           path: TestResults
-      
+
+# validate if the code has any vulnerability
+  dependency-check:
+    name: Dependency Check
+    needs: versioning
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/dependency-review-action@v4
+        with:
+          comment-summary-in-pr: always
+    if: github.ref != 'refs/heads/master'          
+     
 
           
       
