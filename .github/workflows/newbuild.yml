@@ -29,3 +29,16 @@ jobs:
 
       - name: Build the project
         run: dotnet build --configuration Release --no-restore
+
+        # Do the tests and generate the file
+      - name: Test
+        run: |
+          dotnet test --no-build --no-restore ./AspirePoc.sln --configuration Release --logger trx --results-directory "TestResults"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dotnet-test-results
+          path: TestResults
+      
+
+          
+      
