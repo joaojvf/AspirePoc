@@ -10,8 +10,27 @@ on:
   workflow_dispatch: ## turn available trigger manually the workflow
 
 jobs:
+
+  versioning: 
+    runs-on: ubuntu-latest
+    name: Versioning
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - uses: codacy/git-version@2.8.0
+        id: version
+        with:
+          release-branch: master
+          prefix: v ## prefix to version
+
   build:
     runs-on: ubuntu-latest
+    name: Build Project
 
     steps:
       - name: Checkout code
