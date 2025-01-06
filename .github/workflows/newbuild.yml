@@ -116,22 +116,29 @@ jobs:
         include:
           - name: Backend
             language: csharp
-            build-mode: autobuild
-
+            build-mode: manual
     steps:
-      - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-      - uses: github/codeql-action/init@v3
-        name: Initialize CodeQL - ${{ matrix.name }}
-        with:
-          languages: ${{ matrix.language }}
-          build-mode: ${{ matrix.build-mode }}
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: ${{ matrix.language }}
+        build-mode: ${{ matrix.build-mode }}
 
-      - uses: github/codeql-action/analyze@v3
-        name: Analyze code - ${{ matrix.name }}
-        with:
-          category: "/language:${{ matrix.language }}"
-    if: github.ref != 'refs/heads/main'
+    - if: ${{ matrix.build-mode == 'manual' }}
+      name: Build C# code manually
+      run: |
+        echo 'Starting manual build for C# code...'
+        dotnet restore
+        dotnet build --configuration Release
+        echo 'Manual build complete.'
+
+    - uses: github/codeql-action/analyze@v3
+      name: Analyze code - ${{ matrix.name }}
+      with:
+        category: "/language:${{ matrix.language }}"
 
         
     
