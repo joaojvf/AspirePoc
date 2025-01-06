@@ -101,7 +101,7 @@ jobs:
           comment-summary-in-pr: always
     if: github.ref != 'refs/heads/master'          
 
-  code-security-check:
+  code-security-check: 
     name: Code Security Check
     needs: versioning
     runs-on: ubuntu-latest
