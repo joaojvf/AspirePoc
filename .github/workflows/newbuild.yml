@@ -110,12 +110,12 @@ jobs:
       actions: read
       contents: read
     
-    # strategy:
-    #   matrix:
-    #     include:
-    #       - name: Backend
-    #         language: csharp
-    #         build-mode: autobuild
+    strategy:
+      fail-fast: false
+      matrix:
+        # Override automatic language detection by changing the list below.
+        # Supported options are listed in a comment in the default workflow.
+        language: ['csharp']
       
     steps:
       - uses: actions/checkout@v4
@@ -124,14 +124,11 @@ jobs:
         name: Initialize CodeQL - Backend
         with:
           languages: csharp
-          # build-mode: ${{ matrix.build-mode }}
   
       - uses: github/codeql-action/analyze@v3
         name: Analyze code - Backend
         with:
-          category: "/language:csharp"
-    # if: github.ref != 'refs/heads/master'      
-     
+          category: "/language:csharp"     
 
           
       
