@@ -9,13 +9,51 @@ on:
       - master
   workflow_dispatch: ## turn available trigger manually the workflow
 
+  # validate all workflows in the same branch, if any job fails, the others will be canceled
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build:
+  versioning: 
     runs-on: ubuntu-latest
+    name: Versioning
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - uses: codacy/git-version@2.8.0
+        id: version
+        with:
+          release-branch: master
+          prefix: v 
+          ## prefix to version
+
+      - name: Tag do repositorio
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "::notice:: ${{ steps.version.outputs.version }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git config --global user.name "${{ github.actor }}"
+          git tag -a ${{ steps.version.outputs.version }} -m "Release ${{ steps.version.outputs.version }}"
+          git push --tags
+        if: github.ref == 'refs/heads/master'          
+
+  build-and-tests:
+    needs: versioning # dependency between jobs    
+    runs-on: ubuntu-latest
+    name: Build Project
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0        
 
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v4
@@ -23,6 +61,14 @@ jobs:
           dotnet-version: '9.0.x' # Adjust the version as needed
           cache: true
           cache-dependency-path: ./src/**/packages.lock.json # Needs to enable cache directly in the main project first, adding that flag as true RestorePackagesWithLockFile
+
+      - uses: github/super-linter@v6
+        env:
+          DEFAULT_BRANCH: "master"
+          VALIDATE_ALL_CODEBASE: "false"
+          VALIDATE_YAML: "true"
+          VALIDATE_CSHARP: "true"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}          
 
       - name: Restore dependencies
         run: dotnet restore
@@ -34,11 +80,70 @@ jobs:
       - name: Test
         run: |
           dotnet test --no-build --no-restore ./AspirePoc.sln --configuration Release --logger trx --results-directory "TestResults"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4 # generate artifacts that turn available to download
         with:
           name: dotnet-test-results
           path: TestResults
-      
 
-          
-      
+# validate if the code has any vulnerability
+  dependency-check:
+    name: Dependency Check
+    needs: versioning
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/dependency-review-action@v4
+        with:
+          comment-summary-in-pr: always
+    if: github.ref != 'refs/heads/master'          
+
+  code-security-check: 
+    name: Code Security Check
+    needs: versioning
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      packages: read
+      actions: read
+      contents: read
+
+    strategy:
+      matrix:
+        include:
+          - name: Backend
+            language: csharp
+            build-mode: manual
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x' # Adjust the version as needed      
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: ${{ matrix.language }}
+        build-mode: ${{ matrix.build-mode }}
+
+    - if: ${{ matrix.build-mode == 'manual' }}
+      name: Build C# code manually
+      run: |
+        echo 'Starting manual build for C# code...'
+        dotnet restore
+        dotnet build --configuration Release
+        echo 'Manual build complete.'
+
+    - uses: github/codeql-action/analyze@v3
+      name: Analyze code - ${{ matrix.name }}
+      with:
+        category: "/language:${{ matrix.language }}"
+
+        
+    
