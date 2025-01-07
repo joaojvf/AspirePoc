@@ -121,6 +121,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x' # Adjust the version as needed      
+
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
