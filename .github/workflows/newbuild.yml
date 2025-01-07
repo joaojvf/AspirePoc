@@ -19,6 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Versioning
 
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -85,8 +88,23 @@ jobs:
           name: dotnet-test-results
           path: TestResults
 
-# validate if the code has any vulnerability
+      - name: Publish
+        run: dotnet publish ./src/AspirePoc.UI.Api/AspirePoc.UI.Api.csproj --no-restore --no-build --configuration Release --output ./publish
+
+      - name: Tag published version
+        uses: restackio/update-json-file-action@2.1
+        with:
+          file: ./publish/appsettings.json
+          fields: "{\"MY_APP_VERSION\": \"${{ needs.versioning.outputs.version }}\"}"
+
+      - name: Upload dotnet artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: api
+          path: ./publish          
+
   dependency-check:
+    # validate if the code has any vulnerability
     name: Dependency Check
     needs: versioning
     runs-on: ubuntu-latest
@@ -121,6 +139,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+      # needed add the setup of .NET because the version is not long term
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v4
       with:
@@ -145,5 +164,38 @@ jobs:
       with:
         category: "/language:${{ matrix.language }}"
 
-        
+  build-docker-image:
+    name: Packing and Publish
+    needs: [versioning, build-and-tests]
+    runs-on: ubuntu-latest
+
+    env:
+      version: ${{ needs.versioning.outputs.version }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: app
+          merge-multiple: false
+
+      - name: Build Docker image
+        run: |
+          docker build -t aspire-poc:${{ vars.DOCKERHUB_REPOSITORY }}:${{ env.version }} .
+
+      # - name: Tag Docker image as Latest
+      #   run: |
+      #     docker tag ${{ vars.DOCKERHUB_REPOSITORY }}:${{ env.version }} ${{ vars.DOCKERHUB_REPOSITORY }}:latest
+      #   if: github.ref == 'refs/heads/master'
+
+      # - name: Docker Login
+      #   uses: docker/login-action@v3
+      #   with:
+      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # - name: Docker Push
+      #   run: |
+      #     docker push --all-tags thiagolunardi/todo-app        
     
